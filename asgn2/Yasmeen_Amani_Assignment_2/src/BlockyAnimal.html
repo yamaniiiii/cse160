@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Asgn2 - Blocky Monkey</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #111318;
+      color: #d4c5a9;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      gap: 14px;
+      padding: 14px;
+      min-height: 100vh;
+    }
+    canvas {
+      border: 2px solid #3a3020;
+      display: block;
+      flex-shrink: 0;
+      cursor: grab;
+    }
+    canvas:active { cursor: grabbing; }
+    #controls {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 220px;
+      flex-shrink: 0;
+    }
+    .section {
+      background: #1c1e26;
+      border: 1px solid #2e2a1e;
+      padding: 9px 11px;
+      border-radius: 5px;
+    }
+    .section h3 {
+      font-size: 10px;
+      color: #7a6a4a;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 7px;
+    }
+    label {
+      font-size: 11px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      color: #b0a080;
+    }
+    label span { color: #e8d090; min-width: 36px; text-align: right; }
+    input[type=range] {
+      width: 100%;
+      margin-top: 2px;
+      accent-color: #c87d30;
+    }
+    button {
+      width: 100%;
+      padding: 7px;
+      background: #2a2218;
+      color: #d4b870;
+      border: 1px solid #4a3a20;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    button:hover { background: #3a3020; }
+    button:last-child { margin-bottom: 0; }
+    #fps {
+      font-size: 11px;
+      color: #6a9a6a;
+      text-align: right;
+      padding: 4px 6px;
+      background: #141810;
+      border: 1px solid #2a3a2a;
+      border-radius: 4px;
+    }
+    .hint {
+      font-size: 10px;
+      color: #5a5040;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body onload="main()">
+
+<canvas id="webgl" width="500" height="500">
+  Please use a browser that supports WebGL
+</canvas>
+
+<div id="controls">
+
+  <div class="section">
+    <h3>Global Rotation</h3>
+    <label>Y-axis <span id="globalRotYVal">0°</span></label>
+    <input type="range" id="globalRotY" min="-180" max="180" value="0" oninput="onGlobalRotY()">
+    <label>X-axis <span id="globalRotXVal">0°</span></label>
+    <input type="range" id="globalRotX" min="-90" max="90" value="0" oninput="onGlobalRotX()">
+    <p class="hint">Drag canvas to rotate</p>
+  </div>
+
+  <div class="section">
+    <h3>Left Arm</h3>
+    <label>Shoulder <span id="upperArmVal">0°</span></label>
+    <input type="range" id="upperArm" min="-90" max="90" value="0" oninput="onUpperArm()">
+    <label>Elbow <span id="lowerArmVal">0°</span></label>
+    <input type="range" id="lowerArm" min="-80" max="0" value="0" oninput="onLowerArm()">
+    <label>Wrist <span id="handVal">0°</span></label>
+    <input type="range" id="hand" min="-60" max="60" value="0" oninput="onHand()">
+  </div>
+
+  <div class="section">
+    <h3>Left Leg</h3>
+    <label>Hip <span id="upperLegVal">0°</span></label>
+    <input type="range" id="upperLeg" min="-60" max="60" value="0" oninput="onUpperLeg()">
+    <label>Knee <span id="lowerLegVal">0°</span></label>
+    <input type="range" id="lowerLeg" min="-80" max="0" value="0" oninput="onLowerLeg()">
+    <label>Ankle <span id="footVal">0°</span></label>
+    <input type="range" id="foot" min="-40" max="40" value="0" oninput="onFoot()">
+  </div>
+
+  <div class="section">
+    <h3>Tail</h3>
+    <label>Tail swing <span id="tailVal">0°</span></label>
+    <input type="range" id="tail" min="-60" max="60" value="0" oninput="onTail()">
+  </div>
+
+  <div class="section">
+    <h3>Animation</h3>
+    <button id="animBtn" onclick="toggleAnim()">Start Animation</button>
+    <p class="hint">Shift+click canvas to poke the monkey</p>
+  </div>
+
+  <div id="fps">-- fps</div>
+
+</div>
+
+<script src="lib/webgl-utils.js"></script>
+<script src="lib/webgl-debug.js"></script>
+<script src="lib/cuon-utils.js"></script>
+<script src="BlockyAnimal.js"></script>
+</body>
+</html>
